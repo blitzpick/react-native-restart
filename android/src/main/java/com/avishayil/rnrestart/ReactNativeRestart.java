@@ -1,5 +1,7 @@
 package com.avishayil.rnrestart;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -13,6 +15,8 @@ import com.facebook.react.bridge.ReactMethod;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by Avishay on 7/17/16.
@@ -56,9 +60,19 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
         }
     }
 
+    private void triggerRebirth() {
+        final ReactApplicationContext reactContext = this.getReactApplicationContext();
+        Intent i = reactContext
+                .getPackageManager()
+                .getLaunchIntentForPackage(reactContext.getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        reactContext.startActivity(i);
+        System.exit(0);
+    }
+
     @ReactMethod
     public void Restart() {
-        loadBundle();
+        this.triggerRebirth();
     }
 
     @Override
