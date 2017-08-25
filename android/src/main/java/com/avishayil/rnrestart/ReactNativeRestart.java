@@ -29,7 +29,7 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
     private static final String REACT_APPLICATION_CLASS_NAME = "com.facebook.react.ReactApplication";
     private static final String REACT_NATIVE_HOST_CLASS_NAME = "com.facebook.react.ReactNativeHost";
 
-    private ReactContext mContext;
+    private ReactApplicationContext mContext;
 
     public ReactNativeRestart(ReactApplicationContext reactContext) {
         super(reactContext);
