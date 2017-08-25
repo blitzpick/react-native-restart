@@ -67,7 +67,6 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
                 .getLaunchIntentForPackage(reactContext.getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         reactContext.startActivity(i);
-        System.exit(0);
     }
 
     @ReactMethod
