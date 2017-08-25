@@ -26,9 +26,11 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
     private static final String REACT_APPLICATION_CLASS_NAME = "com.facebook.react.ReactApplication";
     private static final String REACT_NATIVE_HOST_CLASS_NAME = "com.facebook.react.ReactNativeHost";
 
+    private ReactContext mContext;
 
     public ReactNativeRestart(ReactApplicationContext reactContext) {
         super(reactContext);
+        mContext = reactContext;
     }
 
     private void loadBundleLegacy() {
@@ -60,18 +62,15 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
         }
     }
 
-    private void triggerRebirth() {
-        final ReactApplicationContext reactContext = this.getReactApplicationContext();
-        Intent i = reactContext
-                .getPackageManager()
-                .getLaunchIntentForPackage(reactContext.getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        reactContext.startActivity(i);
-    }
-
     @ReactMethod
     public void Restart() {
-        this.triggerRebirth();
+        Intent mStartActivity = mContext.getPackageManager().getLaunchIntentForPackage(mContext.getPackageName());
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(mContext, mPendingIntentId, mStartActivity,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
     }
 
     @Override
