@@ -7,6 +7,9 @@ import android.os.Looper;
 
 import android.app.Activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactApplicationContext;
